@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo POST</title>
+</head>
+<body>
+  <h2>Formulário: Verbo POST</h2>
+  <form id="formulario">
+    Nome: <input type="text" name="nome"><br>
+    Idade: <input type="number" name="idade"><br>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p id="resposta"></p>
+
+  <script>
+    document.getElementById("formulario").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const body = new URLSearchParams(formData);
+
+      const resposta = await fetch("http://localhost:8080", {
+        method: "POST",
+        body,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+
+      const texto = await resposta.text();
+      document.getElementById("resposta").innerText = texto;
+    });
+  </script>
+</body>
+</html>

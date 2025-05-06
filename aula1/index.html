@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo GET</title>
+</head>
+<body>
+  <h2>Exemplo: Verbo GET</h2>
+  <button onclick="DoGET()">Enviar GET</button>
+  <p id="resposta"></p>
+
+  <script>
+    function DoGET() {
+      fetch("http://localhost:8080")
+        .then(res => res.text())
+        .then(txt => {
+          document.getElementById("resposta").innerText = txt;
+        });
+    }
+  </script>
+</body>
+</html>
