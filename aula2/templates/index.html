@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificador</title>
+</head>
+<body>
+    <h1>Verificador de Idade</h1>
+    <form method="POST">
+        <input type="number" name="idade" placeholder="Digite sua idade" required>
+        <button type="submit">Verificar</button>
+    </form>
+
+    {% if resultado_idade %}
+        <p><strong>{{ resultado_idade }}</strong></p>
+    {% endif %}
+
+    <hr>
+
+    <h1>Verificador de Nota</h1>
+    <form method="POST">
+        <input type="number" name="nota" step="0.1" placeholder="Digite sua nota" required>
+        <button type="submit">Verificar</button>
+    </form>
+    
+    {% if resultado_nota %}
+        <p><strong>{{ resultado_nota }}</strong></p>
+    {% endif %}
+</body>
+</html>

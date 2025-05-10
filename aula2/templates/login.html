@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentativa de Login</title>
+</head>
+<body>
+    <h1>Tentativa de Login</h1>
+    
+    <form method="POST">
+        <label for="usuario">Usuário:</label>
+        <input type="text" name="usuario" id="usuario" required><br><br>
+
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" id="senha" required><br><br>
+
+        <button type="submit">Entrar</button>
+    </form>
+
+    <h3>{{ resultado }}</h3>
+    <br>
+    <a href="/numeros">Ir para a página de números</a>
+</body>
+</html>
