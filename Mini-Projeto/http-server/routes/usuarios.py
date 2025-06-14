@@ -4,6 +4,7 @@ from urllib.parse import parse_qs
 # Define o caminho para o arquivo que servirá como banco de dados.
 CAMINHO_ARQUIVO = "usuarios.txt"
 
+
 def carregar_usuarios():
     """Carrega os usuários do arquivo usuarios.txt."""
     if not os.path.exists(CAMINHO_ARQUIVO):
@@ -22,6 +23,7 @@ def carregar_usuarios():
             })
     return usuarios
 
+
 def salvar_usuarios(usuarios):
     """Salva a lista de usuários no arquivo usuarios.txt."""
     with open(CAMINHO_ARQUIVO, "w", encoding="utf-8") as f:
@@ -30,7 +32,6 @@ def salvar_usuarios(usuarios):
             f.write(linha)
 
 # --- Handlers do CRUD ---
-
 def listar_usuarios(request, response):
     """Handler para exibir a lista de todos os usuários (Read)."""
     usuarios = carregar_usuarios()
@@ -55,6 +56,7 @@ def listar_usuarios(request, response):
     html_body += "</table>"
     response.send(200, html_body)
 
+
 def novo_usuario(request, response):
     """Handler para exibir o formulário de criação de um novo usuário."""
     html_body = """
@@ -72,6 +74,7 @@ def novo_usuario(request, response):
     """
     response.send(200, html_body)
 
+
 def criar_usuario(request, response):
     """Handler para processar a criação de um novo usuário (Create)."""
     dados = parse_qs(request.body)
@@ -87,6 +90,7 @@ def criar_usuario(request, response):
     salvar_usuarios(usuarios)
     
     response.redirect("/usuarios")
+
 
 def detalhar_usuario(request, response):
     """Handler para exibir os detalhes de um usuário específico."""
@@ -109,6 +113,7 @@ def detalhar_usuario(request, response):
         response.send(200, html_body)
     else:
         response.send(404, "Usuário não encontrado.")
+
 
 def editar_usuario(request, response):
     """Handler para exibir o formulário de edição de um usuário."""
@@ -138,6 +143,7 @@ def editar_usuario(request, response):
     else:
         response.send(404, "Usuário não encontrado.")
 
+
 def atualizar_usuario(request, response):
     """Handler para processar a atualização de um usuário (Update)."""
     try:
@@ -162,6 +168,7 @@ def atualizar_usuario(request, response):
         response.redirect("/usuarios")
     else:
         response.send(404, "Usuário não encontrado para atualizar.")
+
 
 def excluir_usuario(request, response):
     """Handler para processar a exclusão de um usuário (Delete)."""

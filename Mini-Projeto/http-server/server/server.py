@@ -2,10 +2,13 @@ import socket
 from .router import Router
 
 class Server:
+
+
     def __init__(self, host='localhost', port=8080):
         self.host = host
         self.port = port
         self.router = Router()
+
 
     def start(self):
         server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,6 +20,7 @@ class Server:
         while True:
             conn, addr = server_socket.accept()
             self.router.handle_connection(conn)
+
 
     def route(self, path, methods=None):
         return self.router.add_route(path, methods)
