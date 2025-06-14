@@ -1,2 +1,0 @@
-1 | Daniel | danielfedora@gmail.com | 88 67890
-2 | Lupercio | lup@gmail.com | 88 12345
