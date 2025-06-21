@@ -18,22 +18,21 @@ def index():
     </ul>
     """
 
-
-
 # Rotas
 
 @app.route('/definir-cookie-sessao')
 def definir_cookie_sessao():
     
     resposta = make_response("Cookie de sessão 'usuario_logado' definido com sucesso.")
-
-    resposta.set_cookie('usuario_logado', 'admin')
+    resposta.set_cookie('usuario_logado', 'admin', httponly=True, secure=True)
+    
     return resposta
 
 @app.route('/definir-cookie-persistente')
 def definir_cookie_persistente():
+
     resposta = make_response("Cookie persistente 'token_autenticacao' definido. Ele expira em 7 dias.")
-    resposta.set_cookie('token_autenticacao', 'abc123DEF456', max_age=60*60*24*7)
+    resposta.set_cookie('token_autenticacao', 'abc123DEF456', max_age=60*60*24*7, httponly=True, secure=True)
     
     return resposta
 
@@ -42,6 +41,7 @@ def definir_cookie_persistente():
 def ler_cookie():
     usuario = request.cookies.get('usuario_logado', 'Nenhum cookie de sessão encontrado.')
     token = request.cookies.get('token_autenticacao', 'Nenhum cookie persistente encontrado.')
+    
     return f"""
     <h1>Cookies Atuais</h1>
     <p>Valor do cookie de sessão <strong>'usuario_logado'</strong>: <strong>{usuario}</strong></p>
@@ -54,10 +54,38 @@ def ler_cookie():
 def remover_cookie():
     resposta = make_response("Cookies 'usuario_logado' e 'token_autenticacao' removidos com sucesso.")
     # Para remover um cookie, definimos seu valor como vazio e sua data de expiração no passado (expires=0).
+    
     # O navegador, ao receber este Set-Cookie, entende que deve apagar o cookie.
     resposta.set_cookie('usuario_logado', '', expires=0)
     resposta.set_cookie('token_autenticacao', '', expires=0)
     return resposta
+
+
+@app.route('/contador-visitas')
+def contador_visitas():
+    
+    visitas = request.cookies.get('visitas_count')
+
+    if visitas:
+        try:
+            contador = int(visitas) + 1
+        except ValueError:
+            contador = 1  
+    else:
+        contador = 1
+
+    resposta = make_response(f"""
+        <h1>Contador de Visitas</h1>
+        <p>Você visitou esta página <strong>{contador}</strong> vezes.</p>
+        <p><a href="/">Voltar à Página Inicial</a></p>
+    """)
+
+    # duração de um ano 
+    um_ano = 60 * 60 * 24 * 365
+    resposta.set_cookie('visitas_count', str(contador), max_age=um_ano, httponly=True, secure=True)
+
+    return resposta
+
 
 # Fim das Rotas
 
