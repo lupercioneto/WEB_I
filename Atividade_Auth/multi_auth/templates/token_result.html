@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Resultado do Login - {{ method }}</h2>
+    {% if token %}
+        <p>Token gerado (copie e use no header Authorization):</p>
+        <pre>{{ token }}</pre>
+    {% else %}
+    
+    {% endif %}
+    <p><a href="/protected">Ir para Dashboard</a></p>
+    <p><a href="/">Página Inicial</a></p>
+</body>
+</html>
