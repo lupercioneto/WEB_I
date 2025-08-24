@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Autenticação JWT</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    textarea, input { width: 100%; margin-top: 5px; padding: 5px; }
+    button { margin: 10px 5px 10px 0; padding: 5px 10px; }
+    .result { background: #f4f4f4; padding: 10px; margin-top: 10px; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>🔐 Login</h2>
+  <input type="text" id="username" placeholder="Usuário (ex: john)">
+  <input type="password" id="password" placeholder="Senha (ex: 1234)">
+  <button onclick="login()">Login</button>
+
+  <h2>🎫 Tokens</h2>
+  <label>Access Token</label>
+  <textarea id="accessToken" readonly></textarea>
+  <label>Refresh Token</label>
+  <textarea id="refreshToken" readonly></textarea>
+
+  <h2>✅ Testar acesso protegido</h2>
+  <button onclick="acessarProtegido()">Acessar</button>
+
+  <h2>♻️ Refresh Token</h2>
+  <button onclick="refreshToken()">Gerar Novo Access Token</button>
+
+  <h2>🚪 Logout</h2>
+  <button onclick="logout()">Logout</button>
+
+  <div class="result" id="resultado"></div>
+
+  <script>
+    async function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      document.getElementById("accessToken").value = data.access_token || "";
+      document.getElementById("refreshToken").value = data.refresh_token || "";
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function acessarProtegido() {
+      const token = document.getElementById("accessToken").value;
+      const res = await fetch("/protegido", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      const data = await res.json();
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function refreshToken() {
+      const token = document.getElementById("refreshToken").value;
+      const res = await fetch("/refresh-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh_token: token })
+      });
+      const data = await res.json();
+      if (data.access_token) {
+        document.getElementById("accessToken").value = data.access_token;
+      }
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+    }
+
+    async function logout() {
+      const token = document.getElementById("refreshToken").value;
+      const res = await fetch("/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ refresh_token: token })
+      });
+      const data = await res.json();
+      document.getElementById("accessToken").value = "";
+      document.getElementById("refreshToken").value = "";
+      document.getElementById("resultado").textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
