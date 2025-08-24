@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Usuários{% endblock %}
+{% block content %}
+  <h2>Usuários</h2>
+
+  <form method="get" action="{{ url_for('users_page') }}">
+    <input type="search" name="q" value="{{ q or '' }}" placeholder="buscar por nome ou email" />
+    <input type="hidden" name="limit" value="{{ limit }}" />
+    <button type="submit">Buscar</button>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nome</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.nome }}</td>
+        <td>{{ u.email }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="3">Nenhum usuário encontrado.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <div style="margin-top: 1em;">
+    {% if offset > 0 %}
+      <a href="{{ url_for('users_page', limit=limit, offset=prev_offset, q=q) }}">« Anterior</a>
+    {% endif %}
+
+    {% if users|length == limit %}
+      {% if offset > 0 %} | {% endif %}
+      <a href="{{ url_for('users_page', limit=limit, offset=next_offset, q=q) }}">Próxima »</a>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,159 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+  line-height: 1.6;
+  padding: 24px;
+}
+
+/* Header */
+header {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+header a {
+  text-decoration: none;
+  color: #0077cc;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+header a:hover {
+  color: #005fa3;
+}
+
+/* Flash messages */
+.flash {
+  padding: 12px 16px;
+  margin: 8px 0;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.flash.success {
+  background: #e6f7ed;
+  border: 1px solid #8fd19e;
+  color: #2e7d32;
+}
+
+.flash.error {
+  background: #fdecea;
+  border: 1px solid #f5a1a1;
+  color: #c62828;
+}
+
+/* Formulários */
+form div {
+  margin-bottom: 16px;
+}
+
+input, button {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #0077cc;
+  box-shadow: 0 0 5px rgba(0, 119, 204, 0.3);
+  outline: none;
+}
+
+button {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #005fa3;
+}
+
+form a {
+  text-decoration: none;
+  margin-left: 12px;
+  color: #555;
+}
+
+form a:hover {
+  text-decoration: underline;
+}
+
+/* Tabelas */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+th, td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Busca */
+input[type="search"] {
+  width: 250px;
+}
+
+/* Dica de teste */
+p code {
+  background-color: #eee;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: right;
+    position: relative;
+  }
+
+  th::before, td::before {
+    position: absolute;
+    left: 16px;
+    font-weight: 600;
+  }
+
+  td::before {
+    content: attr(data-label);
+  }
+
+  th {
+    display: none;
+  }
+}

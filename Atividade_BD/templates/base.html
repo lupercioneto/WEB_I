@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Web1 - Aula{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    header { margin-bottom: 16px; }
+    .flash { padding: 8px 12px; margin: 6px 0; border-radius: 6px; }
+    .flash.success { background: #e7f8ec; border: 1px solid #a6e3b3; }
+    .flash.error   { background: #fdecec; border: 1px solid #efb0b0; }
+    input, button { padding: 8px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #fafafa; text-align: left; }
+    form.inline { display: inline; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="{{ url_for('users_new_form') }}">Novo usuário</a> |
+    <a href="{{ url_for('users_page') }}">Lista de usuários</a>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>
